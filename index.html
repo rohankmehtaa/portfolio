@@ -790,12 +790,12 @@ footer { border-top:1px solid var(--border);padding:24px 56px;display:flex;justi
         Email
       </a>
     </div>
-    <div class="cform">
-      <div class="fg"><label class="flbl">name</label><input class="finp" type="text" placeholder="Jane Smith"></div>
-      <div class="fg"><label class="flbl">email</label><input class="finp" type="email" placeholder="jane@company.com"></div>
-      <div class="fg"><label class="flbl">message</label><textarea class="ftxt" placeholder="What's on your mind?"></textarea></div>
-      <button class="fsub" onclick="handleSubmit(this)">Send Message →</button>
-    </div>
+    <form class="cform" action="https://formspree.io/f/xykbpvol" method="POST">
+      <div class="fg"><label class="flbl">name</label><input class="finp" type="text" name="name" placeholder="Jane Smith" required></div>
+      <div class="fg"><label class="flbl">email</label><input class="finp" type="email" name="email" placeholder="jane@company.com" required></div>
+      <div class="fg"><label class="flbl">message</label><textarea class="ftxt" name="message" placeholder="What's on your mind?" required></textarea></div>
+      <button type="submit" class="fsub">Send Message →</button>
+    </form>
   </div>
 </section>
 
