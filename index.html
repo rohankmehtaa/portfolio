@@ -4,318 +4,528 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rohan Mehta — Data Engineer</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Fraunces:ital,wght@0,300;0,600;0,700;1,300;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Fraunces:ital,wght@0,300;0,700;1,300;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#0a0a0a;--bg2:#0f0f0f;--surface:#141414;--surface2:#1a1a1a;--border:#222;--border2:#2e2e2e;--text:#d4d4d4;--muted:#666;--dim:#444;--accent:#e8ff47;--ink:#0a0a0a;--white:#f5f5f5;}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html{scroll-behavior:smooth;}
-body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;overflow-x:hidden;cursor:none;}
-body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(232,255,71,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(232,255,71,.03) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;z-index:0;}
-.cursor-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;box-shadow:0 0 10px rgba(232,255,71,.6);}
-.cursor-ring{width:30px;height:30px;border:1px solid rgba(232,255,71,.3);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;}
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;justify-content:space-between;align-items:center;padding:0 56px;height:58px;background:rgba(10,10,10,.94);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
-.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
-.nav-prompt{font-family:'JetBrains Mono',monospace;font-size:.72rem;color:var(--accent);}
-.nav-name{font-family:'JetBrains Mono',monospace;font-size:.84rem;color:var(--white);font-weight:500;}
-.nav-cursor{display:inline-block;width:8px;height:15px;background:var(--accent);margin-left:2px;vertical-align:middle;animation:blink 1.1s step-end infinite;}
-.nav-links{display:flex;list-style:none;}
-.nav-links a{display:flex;align-items:center;padding:0 16px;height:58px;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:500;color:var(--muted);text-decoration:none;transition:color .2s;border-bottom:2px solid transparent;}
-.nav-links a:hover{color:var(--accent);border-bottom-color:var(--accent);}
-.container{max-width:1140px;margin:0 auto;padding:0 56px;position:relative;z-index:1;}
-section{padding:100px 0;position:relative;z-index:1;}
-.sec-header{margin-bottom:56px;}
-.sec-tag{display:inline-flex;align-items:center;gap:10px;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);letter-spacing:.14em;text-transform:uppercase;margin-bottom:16px;}
-.sec-tag::before{content:'//';color:var(--dim);}
-.sec-title{font-family:'Fraunces',serif;font-size:clamp(2.2rem,4.5vw,3.4rem);font-weight:700;color:var(--white);line-height:1.08;letter-spacing:-.5px;}
-.sec-title em{font-style:italic;font-weight:300;color:var(--accent);}
-.bg-alt{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+:root {
+  --bg:       #0a0a0a;
+  --bg2:      #0f0f0f;
+  --surface:  #111111;
+  --surface2: #161616;
+  --border:   #222222;
+  --border2:  #2a2a2a;
+  --text:     #e8e8e8;
+  --body:     #a0a0a0;
+  --muted:    #555555;
+  --dim:      #3a3a3a;
+  --accent:   #e8ff47;
+  --white:    #ffffff;
+  --green:    #6bcb77;
+  --amber:    #f4a942;
+}
 
-/* HERO */
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:110px 56px 70px;max-width:1140px;margin:0 auto;position:relative;}
-.hero-chip{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border2);border-radius:3px;padding:7px 14px;margin-bottom:40px;width:fit-content;opacity:0;animation:fadeUp .6s .2s forwards;}
-.td{width:9px;height:9px;border-radius:50%;}
-.td.r{background:#f47067;}.td.y{background:#e3b341;}.td.g{background:#3fb950;}
-.chip-text{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted);margin-left:4px;}
-.chip-text .ca{color:var(--accent);}
-.hero-name{font-family:'Fraunces',serif;font-size:clamp(5rem,10vw,9rem);font-weight:700;line-height:.88;letter-spacing:-4px;color:var(--white);opacity:0;animation:fadeUp .85s .35s forwards;}
-.hero-name .outline{font-style:italic;font-weight:300;color:transparent;-webkit-text-stroke:1.5px var(--accent);}
-.hero-desc{margin-top:36px;max-width:580px;font-size:1.1rem;color:#888;line-height:1.82;font-weight:300;opacity:0;animation:fadeUp .85s .52s forwards;}
-.hero-desc strong{color:var(--text);font-weight:500;}
-.hero-desc .acc{color:var(--accent);font-weight:600;}
-.hero-meta{margin-top:28px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;opacity:0;animation:fadeUp .85s .65s forwards;}
-.hero-badge{display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted);}
-.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);}
-.hero-divider{width:1px;height:14px;background:var(--border2);}
-.hero-cta{margin-top:52px;display:flex;gap:14px;opacity:0;animation:fadeUp .85s .78s forwards;}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;font-family:'DM Sans',sans-serif;font-size:.88rem;font-weight:600;text-decoration:none;border-radius:3px;cursor:none;transition:all .22s;letter-spacing:.02em;}
-.btn-p{background:var(--accent);color:var(--ink);border:1.5px solid var(--accent);}
-.btn-p:hover{background:transparent;color:var(--accent);}
-.btn-g{background:transparent;color:var(--muted);border:1.5px solid var(--border2);}
-.btn-g:hover{border-color:var(--accent);color:var(--accent);}
-.scroll-hint{position:absolute;bottom:36px;left:0;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--dim);display:flex;align-items:center;gap:12px;opacity:0;animation:fadeIn 1s 1.4s forwards;}
-.sbar{width:44px;height:1px;background:var(--border2);position:relative;overflow:hidden;}
-.sbar::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--accent);animation:slide 2.2s 1.8s infinite;}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 
-/* STATS */
-.stats-strip{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:1;}
-.stats-row{max-width:1140px;margin:0 auto;padding:0 56px;display:grid;grid-template-columns:repeat(5,1fr);}
-.stat-cell{padding:28px 20px;border-right:1px solid var(--border);display:flex;flex-direction:column;gap:5px;}
-.stat-cell:last-child{border-right:none;}
-.stat-lbl{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;}
-.stat-num{font-family:'Fraunces',serif;font-size:2.1rem;font-weight:700;color:var(--white);line-height:1;}
-.stat-num .u{font-size:1.1rem;color:var(--accent);font-weight:300;margin-left:1px;}
-.stat-sub{font-family:'JetBrains Mono',monospace;font-size:.59rem;color:var(--accent);opacity:.7;}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  overflow-x: hidden;
+  cursor: none;
+}
 
-/* ABOUT */
-.about-grid{display:grid;grid-template-columns:3fr 2fr;gap:64px;align-items:start;}
-.about-bio{display:flex;flex-direction:column;gap:22px;}
-.about-bio p{font-size:1.05rem;color:#888;line-height:1.85;}
-.about-bio strong{color:var(--text);font-weight:500;}
-.quip{font-family:'Fraunces',serif;font-size:1.25rem;font-style:italic;font-weight:300;color:var(--white);border-left:2.5px solid var(--accent);padding-left:22px;line-height:1.55;}
-.profile-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
-.card-bar{background:var(--surface2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--dim);}
-.d{width:9px;height:9px;border-radius:50%;}
-.d.r{background:#f47067;}.d.y{background:#e3b341;}.d.g{background:#3fb950;}
-.card-body{padding:20px;}
-.crow{padding:12px 0;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:4px;}
-.crow:last-child{border-bottom:none;}
-.ckey{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent);letter-spacing:.1em;}
-.cval{font-family:'DM Sans',sans-serif;font-size:.88rem;color:var(--text);line-height:1.5;}
-.cval .sm{font-size:.78rem;color:var(--muted);display:block;margin-top:1px;}
-.cval .hi{color:var(--accent);}
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: radial-gradient(circle, rgba(232,255,71,0.055) 1px, transparent 1px);
+  background-size: 36px 36px;
+  pointer-events: none; z-index: 0;
+}
 
-/* SKILLS */
-.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
-.skill-block{background:var(--surface);padding:28px;transition:background .2s;}
-.skill-block:hover{background:var(--surface2);}
-.sbt{font-size:.8rem;font-weight:600;color:var(--white);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
-.sbt::before{content:'';display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;}
-.pills{display:flex;flex-wrap:wrap;gap:7px;}
-.pill{padding:5px 11px;background:var(--bg);border:1px solid var(--border2);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.68rem;border-radius:2px;transition:all .18s;}
-.pill:hover{border-color:var(--accent);color:var(--accent);background:rgba(232,255,71,.05);}
+/* ── Cursor ── */
+.cursor-dot  { width:7px;height:7px;background:var(--accent);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;box-shadow:0 0 10px rgba(232,255,71,0.5); }
+.cursor-ring { width:30px;height:30px;border:1px solid rgba(232,255,71,0.28);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998; }
 
-/* EXPERIENCE */
-.exp-wrap{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
-.exp-titlebar{background:var(--surface2);border-bottom:1px solid var(--border);padding:11px 20px;display:flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--dim);}
-.exp-titlebar .fn{color:var(--text);}
-.exp-entry{border-bottom:1px solid var(--border);padding:40px;display:grid;grid-template-columns:190px 1fr;gap:40px;opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s;}
-.exp-entry.visible{opacity:1;transform:translateY(0);}
-.exp-entry:last-child{border-bottom:none;}
-.exp-co{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent);font-weight:700;letter-spacing:.04em;margin-bottom:5px;}
-.exp-per{font-size:.82rem;color:var(--muted);margin-bottom:2px;}
-.exp-loc{font-size:.82rem;color:var(--dim);}
-.exp-role{font-family:'Fraunces',serif;font-size:1.55rem;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.2;}
-.domains{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px;}
-.domain{padding:4px 11px;background:rgba(232,255,71,.07);border:1px solid rgba(232,255,71,.2);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.62rem;border-radius:2px;letter-spacing:.06em;}
-.buls{list-style:none;display:flex;flex-direction:column;gap:11px;}
-.buls li{font-size:.93rem;color:#7a7a7a;line-height:1.72;padding-left:20px;position:relative;}
-.buls li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:.78rem;top:4px;}
-.buls li strong{color:var(--text);font-weight:500;}
+/* ── Nav ── */
+nav {
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0 56px;height:58px;
+  background:rgba(10,10,10,0.93);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-brand { display:flex;align-items:center;gap:6px;text-decoration:none; }
+.nav-prompt { font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--green); }
+.nav-name   { font-family:'JetBrains Mono',monospace;font-size:0.82rem;color:var(--white);font-weight:500; }
+.nav-cursor { display:inline-block;width:8px;height:15px;background:var(--accent);margin-left:2px;vertical-align:middle;animation:blink 1.1s step-end infinite; }
+.nav-links  { display:flex;list-style:none; }
+.nav-links a { display:flex;align-items:center;padding:0 14px;height:58px;font-family:'JetBrains Mono',monospace;font-size:0.66rem;color:var(--muted);text-decoration:none;letter-spacing:0.04em;transition:all 0.2s;border-left:1px solid transparent; }
+.nav-links a:hover { color:var(--accent);background:rgba(232,255,71,0.04);border-left-color:var(--border); }
+.nav-links li:first-child a { border-left:none; }
 
-/* PROJECTS */
-.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden;}
-.proj-card{background:var(--surface);padding:34px;display:flex;flex-direction:column;gap:14px;opacity:0;transform:translateY(16px);transition:opacity .55s,transform .55s,background .2s;}
-.proj-card.visible{opacity:1;transform:translateY(0);}
-.proj-card:hover{background:var(--surface2);}
-.proj-card:hover .parrow{transform:translate(3px,-3px);color:var(--accent);}
-.proj-hd{display:flex;justify-content:space-between;align-items:flex-start;}
-.proj-idx{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--dim);}
-.parrow{color:var(--border2);font-size:1.2rem;transition:all .22s;}
-.proj-name{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700;color:var(--white);line-height:1.2;}
-.proj-ind{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent);letter-spacing:.08em;opacity:.75;}
-.proj-desc{font-size:.88rem;color:#6a6a6a;line-height:1.75;flex:1;}
-.proj-pills{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;}
-.proj-pill{padding:3px 9px;border:1px solid var(--border2);color:var(--dim);font-family:'JetBrains Mono',monospace;font-size:.61rem;border-radius:2px;}
+/* ── Layout ── */
+.container { max-width:1100px;margin:0 auto;padding:0 56px;position:relative;z-index:1; }
+section { padding:100px 0;position:relative;z-index:1; }
 
-/* CERTIFICATIONS */
-.cert-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.cert-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:28px;display:flex;flex-direction:column;gap:14px;opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s,border-color .22s,background .22s;}
-.cert-card.visible{opacity:1;transform:translateY(0);}
-.cert-card:hover{border-color:var(--accent);background:var(--surface2);}
-.cert-icon{width:40px;height:40px;border-radius:3px;background:rgba(232,255,71,.08);border:1px solid rgba(232,255,71,.2);display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
-.cert-name{font-size:.96rem;font-weight:600;color:var(--white);line-height:1.35;}
-.cert-issuer{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);}
-.cert-status{display:inline-flex;align-items:center;gap:6px;font-family:'JetBrains Mono',monospace;font-size:.62rem;padding:3px 9px;border-radius:2px;width:fit-content;}
-.cert-status.active{background:rgba(63,185,80,.1);border:1px solid rgba(63,185,80,.3);color:#3fb950;}
-.cert-status.progress{background:rgba(232,255,71,.07);border:1px solid rgba(232,255,71,.2);color:var(--accent);}
+.sec-tag { font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--accent);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:10px; }
+.sec-tag::before { content:'';width:28px;height:1px;background:var(--accent); }
+.sec-title { font-family:'Fraunces',serif;font-size:clamp(2.2rem,4vw,3.1rem);font-weight:700;color:var(--white);line-height:1.1;letter-spacing:-0.5px;margin-bottom:52px; }
+.sec-title em { font-style:italic;font-weight:300;color:var(--accent); }
 
-/* JUDGE */
-.judge-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
-.judge-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:36px;display:flex;flex-direction:column;gap:18px;position:relative;overflow:hidden;opacity:0;transform:translateY(14px);transition:opacity .55s,transform .55s,border-color .22s;}
-.judge-card.visible{opacity:1;transform:translateY(0);}
-.judge-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--accent);}
-.judge-card:hover{border-color:var(--border2);}
-.judge-number{font-family:'Fraunces',serif;font-size:3.5rem;font-weight:700;color:var(--border2);line-height:1;letter-spacing:-2px;position:absolute;top:24px;right:28px;}
-.judge-tag{display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;}
-.judge-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;}
-.judge-title{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;color:var(--white);line-height:1.2;max-width:380px;}
-.judge-org{font-size:.88rem;color:var(--muted);}
-.judge-desc{font-size:.91rem;color:#6e6e6e;line-height:1.74;}
-.judge-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;}
-.jmeta-pill{padding:4px 11px;background:rgba(232,255,71,.06);border:1px solid rgba(232,255,71,.18);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:.61rem;border-radius:2px;}
+/* ── Hero ── */
+#hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: 64px;
+  padding: 110px 56px 64px;
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
 
-/* TESTIMONIALS */
-.testi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-.testi-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:32px;display:flex;flex-direction:column;gap:20px;transition:border-color .2s;}
-.testi-card:hover{border-color:var(--border2);}
-.tqmark{font-family:'Fraunces',serif;font-size:3rem;color:var(--accent);line-height:.8;font-weight:700;opacity:.6;}
-.ttext{font-family:'Fraunces',serif;font-size:1.05rem;font-style:italic;font-weight:300;color:#9a9a9a;line-height:1.78;flex:1;}
-.tauthor{border-top:1px solid var(--border);padding-top:16px;}
-.tname{font-size:.88rem;font-weight:600;color:var(--text);}
-.trole{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);margin-top:3px;}
+.hero-left  { grid-column: 1; }
+.hero-right {
+  grid-column: 2;
+  align-self: center;
+  opacity: 0;
+  animation: fadeIn 1s 0.7s forwards;
+}
 
-/* BLOG */
-.blog-list{display:flex;flex-direction:column;}
-.blog-row{display:grid;grid-template-columns:96px 1fr 130px;align-items:center;gap:28px;padding:22px 0;border-bottom:1px solid var(--border);text-decoration:none;opacity:0;transform:translateX(-12px);transition:opacity .5s,transform .5s;cursor:none;}
-.blog-row.visible{opacity:1;transform:translateX(0);}
-.blog-row:first-child{border-top:1px solid var(--border);}
-.blog-row:hover .btitle{color:var(--accent);}
-.bdate{font-family:'JetBrains Mono',monospace;font-size:.66rem;color:var(--muted);}
-.btitle{font-size:.96rem;font-weight:500;color:var(--text);transition:color .2s;line-height:1.4;}
-.bchip{justify-self:end;padding:4px 10px;border:1px solid var(--border2);font-family:'JetBrains Mono',monospace;font-size:.61rem;color:var(--muted);border-radius:2px;white-space:nowrap;}
+/* Photo slot */
+.hero-photo {
+  width: 240px;
+  height: 300px;
+  border-radius: 4px;
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.hero-photo img {
+  width: 100%; height: 100%;
+  object-fit: cover; border-radius: 4px;
+  display: none; /* change to block once photo is added */
+}
+.hero-photo-placeholder {
+  text-align: center;
+  padding: 24px;
+}
+.hero-photo-placeholder .initials {
+  font-family: 'Fraunces', serif;
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.hero-photo-placeholder .ph-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  line-height: 1.7;
+}
+.hero-photo-accent {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px; background: var(--accent);
+}
+.hero-photo-corner {
+  position: absolute; top: 10px; right: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.56rem; color: var(--muted);
+}
 
-/* CONTACT */
-#contact{border-top:1px solid var(--border);}
-.contact-headline{font-family:'Fraunces',serif;font-size:clamp(2rem,5.5vw,4rem);font-style:italic;font-weight:300;color:var(--white);line-height:1.2;margin-bottom:16px;text-align:center;}
-.contact-headline em{font-style:normal;font-weight:700;color:var(--accent);}
-.contact-sub{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--muted);margin-bottom:36px;text-align:center;}
-.cemail{display:block;font-family:'JetBrains Mono',monospace;font-size:1.1rem;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(232,255,71,.3);padding-bottom:3px;margin:0 auto 36px;width:fit-content;transition:border-color .2s;}
-.cemail:hover{border-bottom-color:var(--accent);}
-.socials{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:56px;}
-.sbtn{display:inline-flex;align-items:center;gap:7px;padding:10px 18px;background:var(--surface);border:1px solid var(--border);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.82rem;font-weight:500;text-decoration:none;border-radius:3px;transition:all .2s;cursor:none;}
-.sbtn:hover{border-color:var(--accent);color:var(--accent);background:rgba(232,255,71,.04);}
-.cform{max-width:520px;margin:0 auto;}
-.fg{margin-bottom:16px;}
-.flbl{display:block;font-family:'DM Sans',sans-serif;font-size:.8rem;font-weight:500;color:var(--text);margin-bottom:7px;}
-.finp,.ftxt{width:100%;background:var(--surface);border:1px solid var(--border2);color:var(--text);font-family:'DM Sans',sans-serif;font-size:.9rem;padding:12px 16px;border-radius:3px;outline:none;transition:border-color .2s,box-shadow .2s;}
-.finp:focus,.ftxt:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,255,71,.07);}
-.ftxt{height:118px;resize:vertical;}
-.fsub{width:100%;background:var(--accent);color:var(--ink);border:1.5px solid var(--accent);font-family:'DM Sans',sans-serif;font-size:.9rem;font-weight:700;padding:14px;border-radius:3px;cursor:none;transition:all .22s;}
-.fsub:hover{background:transparent;color:var(--accent);}
+.hero-chip {
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--surface);border:1px solid var(--border);border-radius:3px;
+  padding:7px 14px;margin-bottom:28px;width:fit-content;
+  opacity:0;animation:fadeUp 0.6s 0.2s forwards;
+}
+.td { width:9px;height:9px;border-radius:50%; }
+.td.r{background:#f47067;} .td.y{background:#e3b341;} .td.g{background:#3fb950;}
+.chip-txt { font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--muted);margin-left:5px; }
+.chip-txt span { color:var(--accent); }
 
-/* FOOTER */
-footer{border-top:1px solid var(--border);padding:24px 56px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1;}
-.fl{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);}
-.fl .fp{color:var(--accent);}
-.fr{font-family:'Fraunces',serif;font-size:.9rem;font-style:italic;color:var(--dim);}
+.hero-name {
+  font-family:'Fraunces',serif;font-size:clamp(4rem,8vw,7.5rem);
+  font-weight:700;line-height:0.92;letter-spacing:-3px;color:var(--white);
+  opacity:0;animation:fadeUp 0.8s 0.35s forwards;margin-bottom:28px;
+}
+.hero-name .outline { font-style:italic;font-weight:300;color:transparent;-webkit-text-stroke:1.5px var(--accent); }
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(26px);}to{opacity:1;transform:translateY(0);}}
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
-@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
-@keyframes slide{0%{left:-100%;}100%{left:100%;}}
+.hero-tagline {
+  opacity:0;animation:fadeUp 0.8s 0.52s forwards;max-width:520px;
+}
+.tagline-code {
+  font-family:'JetBrains Mono',monospace;font-size:0.83rem;color:var(--muted);
+  line-height:2.1;background:var(--surface);border:1px solid var(--border);
+  border-radius:4px;padding:16px 20px;
+}
+.tp{color:var(--green);} .tk{color:var(--amber);} .tv{color:var(--accent);} .tc{color:var(--dim);font-style:italic;}
 
+.hero-cta { margin-top:30px;display:flex;gap:14px;opacity:0;animation:fadeUp 0.8s 0.7s forwards; }
+.btn { display:inline-flex;align-items:center;gap:8px;padding:12px 26px;font-family:'JetBrains Mono',monospace;font-size:0.76rem;font-weight:500;letter-spacing:0.04em;text-decoration:none;border-radius:3px;cursor:none;transition:all 0.22s; }
+.btn-p { background:var(--accent);color:#0a0a0a;border:1.5px solid var(--accent);font-weight:700; }
+.btn-p:hover { background:transparent;color:var(--accent);box-shadow:0 0 18px rgba(232,255,71,0.2); }
+.btn-g { background:transparent;color:var(--muted);border:1.5px solid var(--border2); }
+.btn-g:hover { border-color:var(--accent);color:var(--accent); }
+
+.scroll-hint { position:absolute;bottom:32px;left:0;font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--muted);display:flex;align-items:center;gap:10px;opacity:0;animation:fadeIn 1s 1.3s forwards;grid-column:1/-1; }
+.sbar { width:40px;height:1px;background:var(--border2);position:relative;overflow:hidden; }
+.sbar::after { content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--accent);animation:slide 2s 1.6s infinite; }
+
+/* ── Stats ── */
+.stats-strip { background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:1; }
+.stats-inner { max-width:1100px;margin:0 auto;padding:0 56px;display:grid;grid-template-columns:repeat(5,1fr); }
+.stat-cell { padding:28px 18px;border-right:1px solid var(--border); }
+.stat-cell:last-child { border-right:none; }
+.stat-lbl { font-family:'JetBrains Mono',monospace;font-size:0.59rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:5px; }
+.stat-num { font-family:'Fraunces',serif;font-size:2.1rem;font-weight:700;color:var(--white);line-height:1; }
+.stat-num .u { font-size:1rem;color:var(--accent);font-weight:300; }
+.stat-sub { font-family:'JetBrains Mono',monospace;font-size:0.59rem;color:var(--green);margin-top:4px; }
+
+/* ── About ── */
+#about { background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border); }
+.about-grid { display:grid;grid-template-columns:3fr 2fr;gap:60px;align-items:start; }
+.about-bio { display:flex;flex-direction:column;gap:22px; }
+.about-bio p { font-size:1.04rem;color:var(--body);line-height:1.9; }
+.about-bio strong { color:var(--text);font-weight:500; }
+.quip { font-family:'Fraunces',serif;font-size:1.18rem;font-style:italic;font-weight:300;color:var(--accent);border-left:2px solid var(--accent);padding-left:20px;line-height:1.6; }
+
+.about-card { background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden; }
+.card-bar { background:var(--surface2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:0.64rem;color:var(--muted); }
+.d { width:8px;height:8px;border-radius:50%; }
+.d.r{background:#f47067;} .d.y{background:#e3b341;} .d.g{background:#3fb950;}
+.card-body { padding:18px; }
+.crow { padding:11px 0;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:4px; }
+.crow:last-child { border-bottom:none; }
+.ckey { font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--amber);letter-spacing:0.08em; }
+.ckey::before { content:'> ';color:var(--green); }
+.cval { font-family:'JetBrains Mono',monospace;font-size:0.79rem;color:var(--text);line-height:1.55; }
+.cval .a{color:var(--accent);} .cval .g{color:var(--green);} .cval .m{color:var(--muted);font-size:0.71rem;}
+
+/* ── Skills ── */
+.skills-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border); }
+.skill-block { background:var(--surface);padding:26px;transition:background 0.2s; }
+.skill-block:hover { background:var(--surface2); }
+.sbt { font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:13px; }
+.sbt::before { content:'# ';color:var(--muted); }
+.pills { display:flex;flex-wrap:wrap;gap:7px; }
+.pill { padding:5px 11px;background:var(--surface2);border:1px solid var(--border2);color:var(--body);font-family:'JetBrains Mono',monospace;font-size:0.69rem;border-radius:2px;transition:all 0.18s; }
+.pill:hover { background:rgba(232,255,71,0.08);border-color:var(--accent);color:var(--accent); }
+
+/* ── Certs ── */
+#certifications { background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border); }
+.certs-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:16px; }
+.cert-card { background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:28px;display:flex;flex-direction:column;gap:13px;transition:border-color 0.22s,background 0.22s;opacity:0;transform:translateY(16px);transition:opacity 0.55s,transform 0.55s,border-color 0.22s,background 0.22s; }
+.cert-card.visible { opacity:1;transform:translateY(0); }
+.cert-card:hover { border-color:var(--accent);background:var(--surface2); }
+.cert-icon { font-size:1.4rem;width:40px;height:40px;display:flex;align-items:center;justify-content:center;background:rgba(232,255,71,0.07);border:1px solid rgba(232,255,71,0.18);border-radius:3px; }
+.cert-status-active { font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--green);letter-spacing:0.08em; }
+.cert-status-prog   { font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--amber);letter-spacing:0.08em; }
+.cert-name { font-family:'Fraunces',serif;font-size:1.08rem;font-weight:700;color:var(--white);line-height:1.25; }
+.cert-body { font-size:0.85rem;color:var(--body);line-height:1.65; }
+.cert-issuer { font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--muted); }
+
+/* ── Experience ── */
+.exp-terminal { background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden; }
+.exp-bar { background:var(--surface2);border-bottom:1px solid var(--border);padding:10px 18px;display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--muted); }
+.exp-bar .ef { color:var(--accent);margin-left:6px; }
+.exp-entry { border-bottom:1px solid var(--border);padding:40px;display:grid;grid-template-columns:185px 1fr;gap:40px;opacity:0;transform:translateY(20px);transition:opacity 0.6s,transform 0.6s; }
+.exp-entry.visible { opacity:1;transform:translateY(0); }
+.exp-entry:last-child { border-bottom:none; }
+.exp-co  { font-family:'JetBrains Mono',monospace;font-size:0.71rem;color:var(--accent);font-weight:700;margin-bottom:5px; }
+.exp-per { font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--muted);margin-bottom:2px; }
+.exp-loc { font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--muted); }
+.exp-role { font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:10px; }
+.domains { display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px; }
+.domain { padding:4px 10px;background:rgba(244,169,66,0.07);border:1px solid rgba(244,169,66,0.22);color:var(--amber);font-family:'JetBrains Mono',monospace;font-size:0.62rem;border-radius:2px; }
+.buls { list-style:none;display:flex;flex-direction:column;gap:11px; }
+.buls li { font-size:0.93rem;color:var(--body);line-height:1.72;padding-left:22px;position:relative; }
+.buls li::before { content:'→';position:absolute;left:0;color:var(--accent);font-size:0.75rem;top:3px; }
+.buls li strong { color:var(--text);font-weight:500; }
+
+/* Sub-section within experience */
+.exp-subsection { margin-top:28px;padding-top:24px;border-top:1px solid var(--border); }
+.exp-sub-label { font-family:'JetBrains Mono',monospace;font-size:0.66rem;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:14px; }
+
+/* ── Projects ── */
+.proj-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);border:1px solid var(--border); }
+.proj-card { background:var(--surface);padding:32px;display:flex;flex-direction:column;gap:13px;opacity:0;transform:translateY(16px);transition:opacity 0.55s,transform 0.55s,background 0.22s; }
+.proj-card.visible { opacity:1;transform:translateY(0); }
+.proj-card:hover { background:var(--surface2); }
+.proj-card:hover .parrow { transform:translate(3px,-3px);color:var(--accent); }
+.proj-hd { display:flex;justify-content:space-between;align-items:flex-start; }
+.proj-idx { font-family:'JetBrains Mono',monospace;font-size:0.61rem;color:var(--muted); }
+.parrow { color:var(--dim);transition:all 0.2s;font-size:1.1rem; }
+.proj-name { font-family:'Fraunces',serif;font-size:1.25rem;font-weight:700;color:var(--white);line-height:1.2; }
+.proj-ind { font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--amber);letter-spacing:0.06em;margin-top:2px; }
+.proj-desc { font-size:0.9rem;color:var(--body);line-height:1.72;flex:1; }
+.proj-pills { display:flex;flex-wrap:wrap;gap:6px;margin-top:6px; }
+.proj-pill { padding:3px 9px;border:1px solid var(--border2);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:0.6rem;border-radius:2px; }
+
+/* ── Judging ── */
+#judging { border-top:1px solid var(--border); }
+.judge-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:18px; }
+.judge-card { background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:32px;display:flex;flex-direction:column;gap:16px;transition:border-color 0.22s,background 0.22s;opacity:0;transform:translateY(16px);transition:opacity 0.55s,transform 0.55s,border-color 0.22s; }
+.judge-card.visible { opacity:1;transform:translateY(0); }
+.judge-card:hover { border-color:var(--accent);background:var(--surface2); }
+.judge-badge { display:inline-flex;align-items:center;gap:8px;padding:5px 12px;background:rgba(232,255,71,0.07);border:1px solid rgba(232,255,71,0.2);border-radius:2px;width:fit-content; }
+.jbadge-txt { font-family:'JetBrains Mono',monospace;font-size:0.63rem;color:var(--accent);letter-spacing:0.1em;text-transform:uppercase; }
+.judge-name { font-family:'Fraunces',serif;font-size:1.35rem;font-weight:700;color:var(--white);line-height:1.2; }
+.judge-sub { font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:var(--amber);letter-spacing:0.04em; }
+.judge-desc { font-size:0.92rem;color:var(--body);line-height:1.75; }
+.judge-meta { display:flex;flex-wrap:wrap;gap:8px;margin-top:2px; }
+.judge-tag { padding:4px 10px;border:1px solid var(--border2);font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--muted);border-radius:2px; }
+
+/* ── Testimonials ── */
+#testimonials { background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border); }
+.testi-grid { display:grid;grid-template-columns:repeat(2,1fr);gap:18px; }
+.testi-card { background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:30px;display:flex;flex-direction:column;gap:18px;transition:border-color 0.2s; }
+.testi-card:hover { border-color:var(--border2); }
+.tqm { font-family:'JetBrains Mono',monospace;font-size:0.63rem;color:var(--accent); }
+.ttext { font-family:'Fraunces',serif;font-size:1.05rem;font-style:italic;font-weight:300;color:#b0b8c4;line-height:1.78;flex:1; }
+.tauthor { border-top:1px solid var(--border);padding-top:14px; }
+.tname { font-size:0.88rem;font-weight:600;color:var(--text); }
+.trole { font-family:'JetBrains Mono',monospace;font-size:0.61rem;color:var(--muted);margin-top:3px; }
+
+/* ── Writing (coming soon) ── */
+#writing { border-top:1px solid var(--border); }
+.writing-soon {
+  background:var(--surface);border:1px solid var(--border);border-radius:4px;
+  padding:56px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:20px;
+}
+.ws-icon { font-size:2rem;opacity:0.4; }
+.ws-title { font-family:'Fraunces',serif;font-size:1.6rem;font-style:italic;font-weight:300;color:var(--white); }
+.ws-body { font-size:0.95rem;color:var(--body);max-width:480px;line-height:1.8; }
+.ws-where { display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px; }
+.ws-platform { padding:6px 14px;border:1px solid var(--border2);font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--muted);border-radius:2px; }
+
+/* ── Contact ── */
+#contact { border-top:1px solid var(--border);text-align:center; }
+.contact-headline { font-family:'Fraunces',serif;font-size:clamp(2rem,5vw,3.8rem);font-style:italic;font-weight:300;color:var(--white);line-height:1.2;margin-bottom:14px; }
+.contact-headline em { font-style:normal;font-weight:700;color:var(--accent); }
+.contact-sub { font-family:'JetBrains Mono',monospace;font-size:0.74rem;color:var(--muted);margin-bottom:36px; }
+.cemail { display:inline-block;font-family:'JetBrains Mono',monospace;font-size:1.05rem;color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(232,255,71,0.3);padding-bottom:3px;margin-bottom:36px;transition:border-color 0.2s; }
+.cemail:hover { border-bottom-color:var(--accent); }
+.socials { display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:52px; }
+.sbtn { display:inline-flex;align-items:center;gap:7px;padding:10px 18px;background:var(--surface);border:1px solid var(--border);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:0.68rem;text-decoration:none;border-radius:3px;transition:all 0.2s;cursor:none; }
+.sbtn:hover { border-color:var(--accent);color:var(--accent);background:rgba(232,255,71,0.05); }
+.cform { max-width:520px;margin:0 auto;text-align:left; }
+.fg { margin-bottom:16px; }
+.flbl { display:block;font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px; }
+.flbl::before { content:'// ';color:var(--border2); }
+.finp,.ftxt { width:100%;background:var(--surface);border:1px solid var(--border2);color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.92rem;padding:12px 16px;border-radius:3px;outline:none;transition:border-color 0.2s,box-shadow 0.2s; }
+.finp:focus,.ftxt:focus { border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,255,71,0.07); }
+.ftxt { height:120px;resize:vertical; }
+.fsub { width:100%;background:var(--accent);color:#0a0a0a;border:none;font-family:'JetBrains Mono',monospace;font-size:0.78rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:14px;border-radius:3px;cursor:none;transition:all 0.22s; }
+.fsub:hover { background:transparent;border:1.5px solid var(--accent);color:var(--accent);box-shadow:0 0 18px rgba(232,255,71,0.18); }
+
+/* ── Footer ── */
+footer { border-top:1px solid var(--border);padding:24px 56px;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1; }
+.fl { font-family:'JetBrains Mono',monospace;font-size:0.64rem;color:var(--muted); }
+.fl .fp { color:var(--green); }
+.fr { font-family:'JetBrains Mono',monospace;font-size:0.64rem;color:var(--muted);font-style:italic; }
+
+/* ── Animations ── */
+@keyframes fadeUp  { from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);} }
+@keyframes fadeIn  { from{opacity:0;}to{opacity:1;} }
+@keyframes blink   { 0%,100%{opacity:1;}50%{opacity:0;} }
+@keyframes slide   { 0%{left:-100%;}100%{left:100%;} }
+
+/* ── Responsive ── */
 @media(max-width:960px){
-nav{padding:0 20px;} .nav-links{display:none;} .container{padding:0 20px;}
-#hero{padding:100px 20px 60px;}
-.stats-row{grid-template-columns:repeat(2,1fr);padding:0 20px;}
-.stat-cell:nth-child(5){border-right:none;}
-.about-grid,.skills-grid,.proj-grid,.cert-grid,.judge-grid,.testi-grid{grid-template-columns:1fr;}
-.exp-entry{grid-template-columns:1fr;gap:16px;}
-.blog-row{grid-template-columns:76px 1fr;} .bchip{display:none;}
-footer{flex-direction:column;gap:10px;text-align:center;}
-body{cursor:default;} .cursor-dot,.cursor-ring{display:none;}
+  #hero { grid-template-columns:1fr; padding:96px 20px 60px; row-gap:32px; }
+  .hero-right { grid-column:1; grid-row:1; }
+  .hero-left  { grid-column:1; grid-row:2; }
+  .hero-photo { width:120px; height:150px; }
+}
+@media(max-width:900px){
+  nav{padding:0 20px;} .nav-links{display:none;}
+  .container{padding:0 20px;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);padding:0 20px;}
+  .stat-cell:nth-child(5){border-right:none;}
+  .about-grid,.skills-grid,.certs-grid,.proj-grid,.judge-grid,.testi-grid{grid-template-columns:1fr;}
+  .exp-entry{grid-template-columns:1fr;gap:16px;}
+  footer{flex-direction:column;gap:10px;text-align:center;}
+  body{cursor:default;} .cursor-dot,.cursor-ring{display:none;}
 }
 </style>
 </head>
 <body>
+
 <div class="cursor-dot" id="cdot"></div>
 <div class="cursor-ring" id="cring"></div>
 
+<!-- NAV -->
 <nav>
   <a href="#hero" class="nav-brand">
     <span class="nav-prompt">~/rohan</span>
     <span class="nav-name">mehta<span class="nav-cursor"></span></span>
   </a>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#certifications">Certifications</a></li>
-    <li><a href="#judge">Recognition</a></li>
-    <li><a href="#blog">Writing</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about">about</a></li>
+    <li><a href="#skills">skills</a></li>
+    <li><a href="#certifications">certs</a></li>
+    <li><a href="#experience">experience</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#judging">judging</a></li>
+    <li><a href="#testimonials">testimonials</a></li>
+    <li><a href="#contact">contact</a></li>
   </ul>
 </nav>
 
+<!-- HERO -->
 <section id="hero">
-  <div class="hero-chip">
-    <span class="td r"></span><span class="td y"></span><span class="td g"></span>
-    <span class="chip-text">rohan@data-engineer <span class="ca">~</span> $ whoami</span>
+  <div class="hero-left">
+    <div class="hero-chip">
+      <span class="td r"></span><span class="td y"></span><span class="td g"></span>
+      <span class="chip-txt">rohan@data-engineer: <span>~</span> $ whoami</span>
+    </div>
+    <h1 class="hero-name">Rohan<br><span class="outline">Mehta</span></h1>
+    <div class="hero-tagline">
+      <div class="tagline-code">
+        <div><span class="tp">$</span> <span class="tk">role</span> = <span class="tv">"Data Engineer"</span></div>
+        <div><span class="tp">$</span> <span class="tk">superpower</span> = <span class="tv">"I make data do things it didn't know it could"</span></div>
+        <div><span class="tp">$</span> <span class="tk">based_in</span> = <span class="tv">"Indianapolis, IN"</span></div>
+        <div class="tc"># 750K+ records · $235K+ impact · 4+ industries · 0 boring dashboards</div>
+      </div>
+    </div>
+    <div class="hero-cta">
+      <a href="#experience" class="btn btn-p">View My Work</a>
+      <a href="#contact" class="btn btn-g">Say Hello</a>
+    </div>
   </div>
-  <h1 class="hero-name">Rohan<br><span class="outline">Mehta</span></h1>
-  <p class="hero-desc">
-    <strong>Data Engineer</strong> who turns impossibly messy data into systems people actually trust —
-    across <span class="acc">public health, insurance, energy markets,</span> and enterprise operations.
-    I don't just build pipelines. I build pipelines your team will still be thanking you for <strong>two years later.</strong>
-  </p>
-  <div class="hero-meta">
-    <span class="hero-badge"><span class="dot"></span>Indianapolis, IN</span>
-    <span class="hero-divider"></span>
-    <span class="hero-badge"><span class="dot"></span>Open to senior roles</span>
-    <span class="hero-divider"></span>
-    <span class="hero-badge"><span class="dot"></span>3+ Years · 4+ Industries</span>
+
+  <div class="hero-right">
+    <!--
+      TO ADD YOUR PHOTO:
+      1. Place your photo file (e.g. rohan.jpg) in the same folder as this HTML file
+      2. Change the img tag's src to your filename and set style="display:block"
+      3. Remove the hero-photo-placeholder div
+    -->
+    <div class="hero-photo">
+      <img src="rohan.jpg" alt="Rohan Mehta" style="display:none;">
+      <div class="hero-photo-placeholder">
+        <div class="initials">RM</div>
+        <div class="ph-label">// add photo<br>replace img src</div>
+      </div>
+      <div class="hero-photo-accent"></div>
+      <div class="hero-photo-corner">rohan.jpg</div>
+    </div>
   </div>
-  <div class="hero-cta">
-    <a href="#experience" class="btn btn-p">View My Work</a>
-    <a href="#contact" class="btn btn-g">Get In Touch</a>
+
+  <div class="scroll-hint" style="position:absolute;bottom:32px;left:0;">
+    <div class="sbar"></div>
+    <span>scroll to explore</span>
   </div>
-  <div class="scroll-hint"><div class="sbar"></div><span>scroll to explore</span></div>
 </section>
 
+<!-- STATS -->
 <div class="stats-strip">
-  <div class="stats-row">
-    <div class="stat-cell"><div class="stat-lbl">Records Processed</div><div class="stat-num">750<span class="u">K+</span></div><div class="stat-sub">↑ high reliability</div></div>
+  <div class="stats-inner">
+    <div class="stat-cell"><div class="stat-lbl">Records Processed</div><div class="stat-num">750<span class="u">K+</span></div><div class="stat-sub">↑ audit-grade reliability</div></div>
     <div class="stat-cell"><div class="stat-lbl">Error Reduction</div><div class="stat-num">95<span class="u">%</span></div><div class="stat-sub">↓ manual errors</div></div>
     <div class="stat-cell"><div class="stat-lbl">Funding Enabled</div><div class="stat-num">$235<span class="u">K+</span></div><div class="stat-sub">↑ via BI dashboards</div></div>
     <div class="stat-cell"><div class="stat-lbl">Latency Reduction</div><div class="stat-num">50<span class="u">%</span></div><div class="stat-sub">↓ reporting lag</div></div>
-    <div class="stat-cell"><div class="stat-lbl">Industries Served</div><div class="stat-num">4<span class="u">+</span></div><div class="stat-sub">↑ domains impacted</div></div>
+    <div class="stat-cell"><div class="stat-lbl">Industries</div><div class="stat-num">4<span class="u">+</span></div><div class="stat-sub">↑ domains impacted</div></div>
   </div>
 </div>
 
-<section id="about" class="bg-alt">
+<!-- ABOUT -->
+<section id="about">
   <div class="container">
-    <div class="sec-header"><div class="sec-tag">About</div><h2 class="sec-title">The human<br>behind the <em>queries</em></h2></div>
+    <div class="sec-tag">About</div>
+    <h2 class="sec-title">The human<br>behind the <em>queries</em></h2>
     <div class="about-grid">
       <div class="about-bio">
-        <p>I'm a <strong>Data Engineer</strong> who ended up here because I genuinely cannot stop asking "wait, why does this take so long?" and "who actually uses this report?" Based in <strong>Indianapolis, IN</strong>, I've spent the last few years as a Consultant — building data systems that work across <strong>public health agencies, insurance firms, energy markets,</strong> and enterprise operations.</p>
-        <div class="quip">"If your pipeline runs but nobody trusts the output,<br>did it really run?"</div>
-        <p>My work sits at that rare intersection of <strong>deep technical fluency</strong> and the ability to explain it to a room full of people who'd rather be anywhere else. I've designed ETL architecture from scratch, cut reporting latency in half, and once trained a non-technical team so well they started catching their own data anomalies. That last one felt like a small victory for humanity.</p>
-        <p>Off the clock, I'm probably over-engineering a personal project, judging a hackathon, or trying to convince someone that <strong>data quality is actually interesting</strong> if you frame it right. Spoiler: it usually works.</p>
+        <p>I'm a <strong>Data Engineer</strong> who ended up here because I genuinely can't stop asking "wait, why does this take so long?" and "who actually uses this report?" I've spent the last few years as a contractor at <strong>Bourntec Solutions</strong>, embedded across clients in public health, insurance, energy markets, and enterprise operations — building systems that people actually trust and use.</p>
+        <div class="quip">"I don't just build pipelines. I build pipelines your team will still be thanking you for two years later."</div>
+        <p>My work lives at that <strong>rare intersection</strong> of deep technical fluency and the ability to explain it to a room full of people who'd rather be anywhere else. I've navigated undocumented databases with no data dictionary, enabled a public health division to participate in national research for the first time, and once trained a non-technical team so well they started catching their own data anomalies. That last one felt like a small win for humanity.</p>
+        <p>I hold an <strong>M.S. in Data Science from Indiana University</strong>, a Microsoft Power BI certification, and a Lean Six Sigma Green Belt — because apparently I enjoy making processes more efficient in my spare time too. I also serve as a peer reviewer for international conferences and a judge for national hackathons, because good ideas deserve sharp feedback.</p>
       </div>
-      <div class="profile-card">
+      <div class="about-card">
         <div class="card-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span style="margin-left:6px;">profile.json</span></div>
         <div class="card-body">
-          <div class="crow"><div class="ckey">location</div><div class="cval"><span class="hi">Indianapolis, IN</span></div></div>
-          <div class="crow"><div class="ckey">current_employer</div><div class="cval">Bourntec Solutions Inc.<span class="sm">Data Engineer (Consultant)</span></div></div>
-          <div class="crow"><div class="ckey">education</div><div class="cval">M.S. Data Science<span class="sm">Indiana University, Bloomington</span>B.Tech. Computer Engineering<span class="sm">Charotar University, India</span></div></div>
-          <div class="crow"><div class="ckey">industries</div><div class="cval">Public Health · Insurance<span class="sm">Energy Markets · Enterprise Ops</span></div></div>
-          <div class="crow"><div class="ckey">open_to</div><div class="cval"><span class="hi">Senior DE · Analytics Eng · Data Architect</span></div></div>
+          <div class="crow"><div class="ckey">location</div><div class="cval"><span class="a">Indianapolis, IN</span></div></div>
+          <div class="crow"><div class="ckey">current_role</div><div class="cval">Data Engineer <span class="m">@ Bourntec Solutions</span></div></div>
+          <div class="crow"><div class="ckey">education</div><div class="cval">M.S. Data Science<br><span class="m">Indiana University, Bloomington</span><br>B.Tech. Computer Engineering<br><span class="m">Charotar University, India</span></div></div>
+          <div class="crow"><div class="ckey">certifications</div><div class="cval"><span class="g">✓</span> PBI Data Analyst Associate<br><span class="g">✓</span> Lean Six Sigma Green Belt<br><span class="m">⟳ Snowflake SnowPro Core</span></div></div>
+          <div class="crow"><div class="ckey">also_known_for</div><div class="cval"><span class="a">Conference Reviewer · Hackathon Judge</span></div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- SKILLS -->
 <section id="skills">
   <div class="container">
-    <div class="sec-header"><div class="sec-tag">Skills</div><h2 class="sec-title">Tools I <em>actually use,</em><br>not just list</h2></div>
+    <div class="sec-tag">Skills</div>
+    <h2 class="sec-title">Tools I <em>actually use,</em><br>not just list</h2>
     <div class="skills-grid">
-      <div class="skill-block"><div class="sbt">Languages &amp; Platforms</div><div class="pills"><span class="pill">SQL</span><span class="pill">Python</span><span class="pill">Apache Spark</span><span class="pill">SAS</span><span class="pill">Databricks</span><span class="pill">Snowflake</span><span class="pill">AWS</span><span class="pill">Azure</span><span class="pill">GCP</span></div></div>
-      <div class="skill-block"><div class="sbt">Data Engineering</div><div class="pills"><span class="pill">ETL / ELT Pipelines</span><span class="pill">Data Warehousing</span><span class="pill">Star Schema</span><span class="pill">Data Modeling</span><span class="pill">Normalization</span><span class="pill">Pipeline Design</span></div></div>
-      <div class="skill-block"><div class="sbt">BI &amp; Analytics</div><div class="pills"><span class="pill">Power BI</span><span class="pill">Tableau</span><span class="pill">Grafana</span><span class="pill">DAX</span><span class="pill">Dashboard Design</span><span class="pill">KPI Strategy</span></div></div>
-      <div class="skill-block"><div class="sbt">Quality &amp; Monitoring</div><div class="pills"><span class="pill">Automated QA</span><span class="pill">Error Tracking</span><span class="pill">Reliability Metrics</span><span class="pill">Real-time Monitoring</span></div></div>
-      <div class="skill-block"><div class="sbt">Collaboration</div><div class="pills"><span class="pill">Stakeholder Management</span><span class="pill">Data Literacy Training</span><span class="pill">Technical Documentation</span><span class="pill">Agile</span><span class="pill">Executive Liaison</span></div></div>
-      <div class="skill-block"><div class="sbt">Domains</div><div class="pills"><span class="pill">Public Health</span><span class="pill">Insurance</span><span class="pill">Energy Markets</span><span class="pill">Enterprise Operations</span></div></div>
+      <div class="skill-block"><div class="sbt">Languages &amp; Query</div><div class="pills"><span class="pill">SQL</span><span class="pill">Python</span><span class="pill">PySpark</span><span class="pill">SAS</span><span class="pill">DAX</span></div></div>
+      <div class="skill-block"><div class="sbt">Platforms &amp; Cloud</div><div class="pills"><span class="pill">Databricks</span><span class="pill">Snowflake</span><span class="pill">Azure Synapse</span><span class="pill">Azure Data Factory</span><span class="pill">ADLS Gen2</span><span class="pill">AWS</span><span class="pill">GCP</span></div></div>
+      <div class="skill-block"><div class="sbt">Data Engineering</div><div class="pills"><span class="pill">ETL / ELT</span><span class="pill">Medallion Architecture</span><span class="pill">Delta Lake</span><span class="pill">Star Schema</span><span class="pill">Data Modeling</span><span class="pill">CDC / UPSERT</span><span class="pill">Watermarking</span></div></div>
+      <div class="skill-block"><div class="sbt">BI &amp; Analytics</div><div class="pills"><span class="pill">Power BI</span><span class="pill">Tableau</span><span class="pill">Grafana</span><span class="pill">Excel / Pivot</span><span class="pill">REDCap</span></div></div>
+      <div class="skill-block"><div class="sbt">Quality &amp; Monitoring</div><div class="pills"><span class="pill">Automated QA</span><span class="pill">Data Validation</span><span class="pill">Error Tracking</span><span class="pill">Real-time Monitoring</span><span class="pill">Reliability Metrics</span></div></div>
+      <div class="skill-block"><div class="sbt">Domain Expertise</div><div class="pills"><span class="pill">Public Health</span><span class="pill">Insurance</span><span class="pill">Energy Markets</span><span class="pill">Enterprise Ops</span><span class="pill">Stakeholder Management</span><span class="pill">Data Literacy Training</span></div></div>
     </div>
   </div>
 </section>
 
-<section id="experience" class="bg-alt">
+<!-- CERTIFICATIONS -->
+<section id="certifications">
   <div class="container">
-    <div class="sec-header"><div class="sec-tag">Experience</div><h2 class="sec-title">Where I've been<br><em>breaking things</em> (helpfully)</h2></div>
-    <div class="exp-wrap">
-      <div class="exp-titlebar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span style="margin-left:6px;">experience.log — <span class="fn">Bourntec Solutions Inc.</span></span></div>
+    <div class="sec-tag">Certifications</div>
+    <h2 class="sec-title">Credentials that<br><em>actually mean something</em></h2>
+    <div class="certs-grid">
+      <div class="cert-card reveal">
+        <div class="cert-icon">📊</div>
+        <div class="cert-status-active">✓ Active</div>
+        <div class="cert-name">Microsoft Certified: Power BI Data Analyst Associate</div>
+        <div class="cert-body">Validates the ability to design and build scalable data models, clean and transform data, and enable advanced analytics using Power BI — the tool I've used to influence $235K+ in funding decisions.</div>
+        <div class="cert-issuer">Issued by Microsoft</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">⚙️</div>
+        <div class="cert-status-active">✓ Active</div>
+        <div class="cert-name">Lean Six Sigma Green Belt</div>
+        <div class="cert-body">Process improvement certification covering DMAIC methodology, statistical analysis, and data-driven problem solving. Making things more efficient isn't just my job — apparently it's also my personality.</div>
+        <div class="cert-issuer">Lean Six Sigma Institute</div>
+      </div>
+      <div class="cert-card reveal">
+        <div class="cert-icon">❄️</div>
+        <div class="cert-status-prog">⟳ In Progress</div>
+        <div class="cert-name">Snowflake SnowPro Core</div>
+        <div class="cert-body">Industry-recognized certification covering Snowflake architecture, data loading, performance optimization, and security — for the warehouse I already use daily across enterprise client engagements.</div>
+        <div class="cert-issuer">Issued by Snowflake</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="sec-tag">Experience</div>
+    <h2 class="sec-title">Where I've been<br><em>breaking things</em> (helpfully)</h2>
+    <div class="exp-terminal">
+      <div class="exp-bar">
+        <span class="d r"></span><span class="d y"></span><span class="d g"></span>
+        <span class="ef">experience.log</span>
+      </div>
+
+      <!-- Bourntec / MISO -->
       <div class="exp-entry reveal">
         <div>
           <div class="exp-co">Bourntec Solutions Inc.</div>
@@ -323,130 +533,291 @@ body{cursor:default;} .cursor-dot,.cursor-ring{display:none;}
           <div class="exp-loc">Schaumburg, IL</div>
         </div>
         <div>
-          <div class="exp-role">Data Engineer (Consultant)</div>
-          <div class="domains"><span class="domain">Public Health</span><span class="domain">Insurance</span><span class="domain">Energy Markets</span><span class="domain">Enterprise Ops</span></div>
+          <div class="exp-role">Data Engineer (Contractor)</div>
+          <div class="domains">
+            <span class="domain">Public Health</span>
+            <span class="domain">Insurance</span>
+            <span class="domain">Energy Markets</span>
+            <span class="domain">Enterprise Ops</span>
+          </div>
+
+          <div class="exp-sub-label">&gt; Energy Markets Client (MISO)</div>
           <ul class="buls">
-            <li>Designed and delivered scalable ETL pipelines (SQL, Python, Spark, SAS) across <strong>public health and enterprise clients</strong> — cutting manual errors by <strong>95%</strong> and dramatically accelerating data delivery.</li>
-            <li>Built real-time monitoring systems ensuring <strong>750K+ records</strong> processed with audit-grade reliability — the kind of data quality people stake their reputations on.</li>
-            <li>In the <strong>public health domain</strong>, developed Power BI dashboards surfacing patterns invisible in raw data — directly enabling <strong>$235K+</strong> in targeted funding for underserved populations.</li>
-            <li>For an <strong>insurance sector client</strong>, acted as trusted technical advisor to executive stakeholders — translating compliance requirements into data architecture that held up under audit scrutiny.</li>
-            <li>Within <strong>energy markets</strong>, built Databricks / Spark pipelines that slashed reporting latency by <strong>50%</strong>, letting operations teams react to real-time grid data instead of yesterday's reports.</li>
-            <li>Modeled datasets into Snowflake for enterprise clients, improving query performance by <strong>35%</strong> — giving analysts a warehouse they didn't need to fight with.</li>
-            <li>Led training sessions across client teams — because a dashboard nobody knows how to use is just an <strong>expensive screensaver.</strong></li>
-            <li>Consistently bridged technical and non-technical teams, achieving 100% alignment of deliverables with business goals across every engagement.</li>
+            <li>Designed a <strong>metadata-driven ELT framework</strong> using Azure Data Factory to ingest data from Network Attached Storage into ADLS Gen2 and Azure Synapse Analytics — reducing manual ingestion effort by ~40%.</li>
+            <li>Architected a scalable <strong>Medallion Architecture (Bronze, Silver, Gold)</strong> using Delta Lake, improving data reliability and enabling structured downstream analytics consumption.</li>
+            <li>Developed <strong>dynamic ADF pipelines with incremental load and watermarking logic</strong>, cutting processing time by ~30% and optimizing compute usage.</li>
+            <li>Built and optimized <strong>PySpark notebooks in Synapse Spark pools</strong> to transform raw datasets into staging and curated layers, with business rules for fact and dimension modeling.</li>
+            <li>Implemented <strong>MERGE, UPSERT, and INSERT strategies</strong> in Synapse SQL and Delta tables to support change data capture and ensure data consistency.</li>
+            <li>Contributed to an enterprise-scale <strong>Netezza-to-Azure cloud migration</strong>, modernizing legacy warehouse workloads into a cloud-native Synapse architecture.</li>
+            <li>Enhanced stored procedures and pipeline activities to improve performance and data validation, reducing data inconsistencies by ~25%.</li>
+          </ul>
+
+          <div class="exp-subsection">
+            <div class="exp-sub-label">&gt; Public Health, Insurance &amp; Enterprise Clients</div>
+            <ul class="buls">
+              <li>Designed and delivered scalable ETL pipelines (SQL, Python, Spark, SAS) across multiple client engagements — cutting manual errors by 95% and dramatically accelerating data delivery.</li>
+              <li>Built real-time monitoring systems ensuring <strong>750K+ records</strong> processed with audit-grade reliability — the kind of data quality people stake their reputations on.</li>
+              <li>Developed Power BI dashboards for a <strong>public health client</strong> that surfaced patterns invisible in raw data, enabling $235K+ in targeted funding for underserved families.</li>
+              <li>For an <strong>insurance sector client</strong>, served as trusted technical advisor to executive stakeholders — translating compliance requirements into data architecture that held up under audit scrutiny.</li>
+              <li>Modeled datasets into Snowflake, improving query performance by 35% and giving analysts a warehouse they didn't need to fight with.</li>
+              <li>Ran training sessions across client teams — because a dashboard nobody knows how to use is just an expensive screensaver.</li>
+              <li>Consistently bridged technical and non-technical teams, achieving 100% alignment of deliverables with business goals across every engagement.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- IDOH -->
+      <div class="exp-entry reveal">
+        <div>
+          <div class="exp-co">Indiana Dept. of Health</div>
+          <div class="exp-per">Aug 2023 – Aug 2024</div>
+          <div class="exp-loc">Indianapolis, IN</div>
+        </div>
+        <div>
+          <div class="exp-role">Data Manager</div>
+          <div class="domains">
+            <span class="domain">Public Health</span>
+            <span class="domain">CDC-Funded Programs</span>
+            <span class="domain">Health Equity</span>
+          </div>
+          <ul class="buls">
+            <li>Built an <strong>end-to-end ETL pipeline</strong> (SQL, Python, SAS, Apache Spark) integrating 750K+ records for the CDC-funded ADDM Network, improving data readiness and reducing processing time by 30%.</li>
+            <li>Collected, cleaned, and analyzed statewide hospital data for the <strong>Neonatal Abstinence Syndrome (NAS)</strong> project — clinical records, discharge data, Medicaid and payer claims — to track substance use trends and support rural healthcare policy planning.</li>
+            <li>Led data collection and analysis for the <strong>Early Hearing Detection and Intervention (EHDI)</strong> program across all Indiana hospitals and clinics, influencing $235K+ in annual funding allocations for families needing financial assistance.</li>
+            <li>Prepared a <strong>750,000+ row dataset</strong> for the CDC Environmental Public Health Tracking program, merging multi-source birth defects prevalence data across counties, maternal demographics, and race/ethnicity categories.</li>
+            <li>Navigated entirely <strong>undocumented databases</strong> — no data dictionary, no map — to extract data across all programs, enabling the Public Health Genetics Division to fulfill national research requests for the first time.</li>
+            <li>Automated <strong>REDCap database ingestion</strong> for ASD diagnosis data using SAS, boosting data integrity and reducing manual effort across the team.</li>
+            <li>Led the <strong>NBDPN Membership Workgroup</strong> as workgroup lead — designed surveys, facilitated strategy, and managed responsibilities to improve responsiveness to member needs.</li>
+            <li>Partnered with the <strong>Sickle Cell Disease CASCADE program</strong> (IHI) to structure data enabling service delivery for underserved adult populations across Indiana.</li>
           </ul>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
+<!-- PROJECTS -->
 <section id="projects">
   <div class="container">
-    <div class="sec-header"><div class="sec-tag">Projects</div><h2 class="sec-title">Things I built that<br><em>still run in production</em></h2></div>
+    <div class="sec-tag">Projects</div>
+    <h2 class="sec-title">Things I built that<br><em>still run in production</em></h2>
     <div class="proj-grid">
-      <div class="proj-card reveal"><div class="proj-hd"><div class="proj-idx">01 · public health</div><div class="parrow">↗</div></div><div class="proj-name">Population Health Data Pipeline</div><div class="proj-ind">Public Health · Government</div><div class="proj-desc">End-to-end ETL architecture replacing a brittle manual process with automated pipelines and real-time QA. 750K+ records flow through it daily — and stakeholders finally trust what they see in their reports.</div><div class="proj-pills"><span class="proj-pill">Python</span><span class="proj-pill">Spark</span><span class="proj-pill">SAS</span><span class="proj-pill">SQL</span><span class="proj-pill">Real-time QA</span></div></div>
-      <div class="proj-card reveal"><div class="proj-hd"><div class="proj-idx">02 · public health</div><div class="parrow">↗</div></div><div class="proj-name">Funding Allocation Intelligence Dashboard</div><div class="proj-ind">Public Health · Social Impact</div><div class="proj-desc">A Power BI dashboard enabling program officers to identify families qualifying for support. Directly enabled $235K+ in targeted funding. Sometimes data work actually means something — this was one of those times.</div><div class="proj-pills"><span class="proj-pill">Power BI</span><span class="proj-pill">DAX</span><span class="proj-pill">SQL</span><span class="proj-pill">Data Storytelling</span></div></div>
-      <div class="proj-card reveal"><div class="proj-hd"><div class="proj-idx">03 · energy markets</div><div class="parrow">↗</div></div><div class="proj-name">Real-time Grid Operations Reporting</div><div class="proj-ind">Energy · Utilities</div><div class="proj-desc">Spark pipelines in Databricks feeding near-real-time operational dashboards. Cut reporting latency by 50% — teams stopped making decisions on yesterday's data and started reacting to what's actually on the grid now.</div><div class="proj-pills"><span class="proj-pill">Databricks</span><span class="proj-pill">Spark</span><span class="proj-pill">Power BI</span><span class="proj-pill">Real-time</span></div></div>
-      <div class="proj-card reveal"><div class="proj-hd"><div class="proj-idx">04 · insurance</div><div class="parrow">↗</div></div><div class="proj-name">Compliance-Grade Data Warehouse</div><div class="proj-ind">Insurance · Financial Services</div><div class="proj-desc">Snowflake warehouse with star schema optimized for compliance reporting. Improved query performance by 35%. In insurance, a single source of truth isn't a nice-to-have — it's everything.</div><div class="proj-pills"><span class="proj-pill">Snowflake</span><span class="proj-pill">Star Schema</span><span class="proj-pill">Databricks</span><span class="proj-pill">Compliance</span></div></div>
+
+      <div class="proj-card reveal">
+        <div class="proj-hd"><div class="proj-idx">01 / energy markets</div><div class="parrow">↗</div></div>
+        <div class="proj-name">Medallion Architecture ELT Platform</div>
+        <div class="proj-ind">Energy Markets · Azure Cloud</div>
+        <div class="proj-desc">Metadata-driven ELT framework using Azure Data Factory, ADLS Gen2, and Synapse Analytics — ingesting raw operational data into Bronze, Silver, and Gold layers via Delta Lake. Incremental load with watermarking cut processing time by 30% and eliminated manual ingestion bottlenecks. Built to scale. Built to last.</div>
+        <div class="proj-pills"><span class="proj-pill">ADF</span><span class="proj-pill">Azure Synapse</span><span class="proj-pill">Delta Lake</span><span class="proj-pill">PySpark</span><span class="proj-pill">Medallion Arch.</span></div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-hd"><div class="proj-idx">02 / public health</div><div class="parrow">↗</div></div>
+        <div class="proj-name">CDC ADDM Surveillance Data Pipeline</div>
+        <div class="proj-ind">Public Health · CDC-Funded</div>
+        <div class="proj-desc">End-to-end ETL pipeline for the CDC's Autism and Developmental Disabilities Monitoring Network — pulling data from multiple departmental sources, cleaning with Python, wrangling with SQL, and loading into REDCap using SAS. Reduced processing time by 30% and enabled Indiana to contribute to national ASD research for the first time.</div>
+        <div class="proj-pills"><span class="proj-pill">Oracle SQL</span><span class="proj-pill">Python</span><span class="proj-pill">SAS Studio</span><span class="proj-pill">Apache Spark</span><span class="proj-pill">REDCap</span></div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-hd"><div class="proj-idx">03 / public health</div><div class="parrow">↗</div></div>
+        <div class="proj-name">EHDI Funding Allocation Dashboard</div>
+        <div class="proj-ind">Public Health · Social Impact</div>
+        <div class="proj-desc">Analyzed hearing loss data across all Indiana hospitals and clinics to identify families needing financial support through the EARS program. Built visualizations in Power BI and Excel that made the data legible to non-technical stakeholders. The analysis directly informed $235K+ in annual resource allocation decisions. Sometimes data work actually means something.</div>
+        <div class="proj-pills"><span class="proj-pill">Power BI</span><span class="proj-pill">Excel / VLOOKUP</span><span class="proj-pill">Pivot Tables</span><span class="proj-pill">Data Storytelling</span></div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-hd"><div class="proj-idx">04 / public health</div><div class="parrow">↗</div></div>
+        <div class="proj-name">Birth Defects Prevalence Dataset (750K+ rows)</div>
+        <div class="proj-ind">Public Health · CDC Tracking Network</div>
+        <div class="proj-desc">Prepared the complete dataset for Indiana's CDC Environmental Public Health Tracking program — merging multi-source data on 12 birth defects across counties, maternal age groups, race/ethnicity, and 5-year prevalence periods. Over 750,000 rows, no data dictionary, no roadmap. Just SQL, patience, and a lot of schema exploration.</div>
+        <div class="proj-pills"><span class="proj-pill">SQL</span><span class="proj-pill">Python</span><span class="proj-pill">Data Merging</span><span class="proj-pill">Epidemiology</span></div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-hd"><div class="proj-idx">05 / insurance</div><div class="parrow">↗</div></div>
+        <div class="proj-name">Compliance-Grade Data Warehouse</div>
+        <div class="proj-ind">Insurance · Financial Services</div>
+        <div class="proj-desc">Snowflake warehouse built for an insurance sector client, with a star schema optimized for compliance reporting. Improved query performance by 35% and gave the executive team a single source of truth — which in insurance isn't just nice to have. It's the whole thing.</div>
+        <div class="proj-pills"><span class="proj-pill">Snowflake</span><span class="proj-pill">Star Schema</span><span class="proj-pill">Databricks</span><span class="proj-pill">Compliance</span></div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-hd"><div class="proj-idx">06 / enterprise</div><div class="parrow">↗</div></div>
+        <div class="proj-name">Netezza → Azure Cloud Migration</div>
+        <div class="proj-ind">Enterprise Ops · Cloud Modernization</div>
+        <div class="proj-desc">Contributed to an enterprise-scale migration from legacy on-prem Netezza to a cloud-native Azure Synapse architecture. Interpreted Informatica mappings and source-to-target documentation, redesigned transformation logic for star-schema fact and dimension tables, and improved data accuracy and traceability throughout.</div>
+        <div class="proj-pills"><span class="proj-pill">Netezza</span><span class="proj-pill">Azure Synapse</span><span class="proj-pill">Informatica</span><span class="proj-pill">Star Schema</span></div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<section id="certifications" class="bg-alt">
+<!-- JUDGING & REVIEWING -->
+<section id="judging">
   <div class="container">
-    <div class="sec-header"><div class="sec-tag">Certifications</div><h2 class="sec-title">Credentials that<br><em>actually mean something</em></h2></div>
-    <div class="cert-grid">
-      <div class="cert-card reveal"><div class="cert-icon">📊</div><div class="cert-name">Microsoft Certified: Power BI Data Analyst Associate</div><div class="cert-issuer">Microsoft · DA-100</div><div class="cert-status active">✓ Active</div></div>
-      <div class="cert-card reveal"><div class="cert-icon">⚙️</div><div class="cert-name">Lean Six Sigma Green Belt</div><div class="cert-issuer">Process Excellence · DMAIC Methodology</div><div class="cert-status active">✓ Active</div></div>
-      <div class="cert-card reveal"><div class="cert-icon">❄️</div><div class="cert-name">Snowflake SnowPro Core Certification</div><div class="cert-issuer">Snowflake · COF-C02</div><div class="cert-status progress">⟳ In Progress</div></div>
-    </div>
-  </div>
-</section>
-
-<section id="judge">
-  <div class="container">
-    <div class="sec-header"><div class="sec-tag">Recognition</div><h2 class="sec-title">Judge &amp; <em>Reviewer</em></h2></div>
+    <div class="sec-tag">Judging &amp; Review</div>
+    <h2 class="sec-title">Raising the bar<br><em>from the other side</em></h2>
     <div class="judge-grid">
+
       <div class="judge-card reveal">
-        <div class="judge-number">01</div>
-        <div class="judge-tag">Hackathon Judge</div>
-        <div class="judge-title">Bourntec All India Fire Hackathon</div>
-        <div class="judge-org">Bourntec Solutions Inc.</div>
-        <div class="judge-desc">Served as a judge for Bourntec's national-level hackathon, evaluating data and technology solutions submitted by participants across India. Assessed projects on innovation, technical rigor, real-world applicability, and presentation quality — bringing a practitioner's eye to what "good data work" actually looks like in the field.</div>
-        <div class="judge-meta"><span class="jmeta-pill">National Level</span><span class="jmeta-pill">Data &amp; Tech</span><span class="jmeta-pill">Evaluation</span></div>
+        <div class="judge-badge"><span class="jbadge-txt">🏆 Hackathon Judge</span></div>
+        <div class="judge-name">Bournfire Hackfest 2026</div>
+        <div class="judge-sub">Bourntec Solutions Inc. · Flagship Innovation Challenge</div>
+        <div class="judge-desc">Serving as a judge for Bourntec's flagship national hackathon where students and early professionals solve real enterprise problems using modern digital technologies. Evaluating submissions across four challenge tracks — Gen AI for Smart Governance, Public Tech, Cybersecurity & Privacy, and Digital Transformation & Smart Automation. Assessing technical innovation, delivery quality, real-world applicability, and solution architecture. The same bar I hold my own work to.</div>
+        <div class="judge-meta">
+          <span class="judge-tag">Hackathon Judge</span>
+          <span class="judge-tag">Gen AI</span>
+          <span class="judge-tag">Digital Transformation</span>
+          <span class="judge-tag">Technical Evaluation</span>
+        </div>
       </div>
+
       <div class="judge-card reveal">
-        <div class="judge-number">02</div>
-        <div class="judge-tag">Conference Reviewer</div>
-        <div class="judge-title">ICCAT Conference Reviewer</div>
-        <div class="judge-org">International Conference on Computing and Advanced Technologies</div>
-        <div class="judge-desc">Peer reviewed research submissions for an international academic conference, evaluating technical papers on computing and advanced technologies. Provided structured, critical feedback to authors — ensuring published work meets rigorous standards of originality, methodology, and relevance to the field.</div>
-        <div class="judge-meta"><span class="jmeta-pill">International</span><span class="jmeta-pill">Peer Review</span><span class="jmeta-pill">Research</span></div>
+        <div class="judge-badge"><span class="jbadge-txt">📋 Conference Reviewer</span></div>
+        <div class="judge-name">ICSSA 2025 — Peer Reviewer</div>
+        <div class="judge-sub">International Conference on Smart Systems and Applications</div>
+        <div class="judge-desc">Served as a peer reviewer for ICSSA 2025, evaluating research papers on emerging technologies in healthcare and computing. Reviewed submissions covering AI-driven elder care technologies, sustainable telemedicine systems, and non-pharmacological health interventions — assessing methodological rigor, statistical soundness, and contribution to the field. Contributing to research quality isn't an obligation. It's how the field moves forward.</div>
+        <div class="judge-meta">
+          <span class="judge-tag">Peer Review</span>
+          <span class="judge-tag">Healthcare Tech</span>
+          <span class="judge-tag">AI &amp; Computing</span>
+          <span class="judge-tag">Academic Research</span>
+        </div>
       </div>
+
+      <div class="judge-card reveal">
+        <div class="judge-badge"><span class="jbadge-txt">📋 Conference Reviewer</span></div>
+        <div class="judge-name">ICCAT 2026 — Peer Reviewer</div>
+        <div class="judge-sub">International Conference on Computational Algorithms &amp; Communication Techniques in Engineering Applications</div>
+        <div class="judge-desc">Upcoming peer reviewer for ICCAT 2026 (May 2026), evaluating research on computational algorithms and engineering communication techniques. Extending the same standard of critical analysis applied to previous conference reviews — rigorous, fair, and invested in the quality of what gets published.</div>
+        <div class="judge-meta">
+          <span class="judge-tag">Upcoming · May 2026</span>
+          <span class="judge-tag">Peer Review</span>
+          <span class="judge-tag">Computational Algorithms</span>
+        </div>
+      </div>
+
+      <div class="judge-card reveal" style="background:rgba(232,255,71,0.02);border-style:dashed;">
+        <div class="judge-badge"><span class="jbadge-txt">💡 NBDPN Workgroup Lead</span></div>
+        <div class="judge-name">National Birth Defects Prevention Network</div>
+        <div class="judge-sub">Membership Workgroup · National Organization</div>
+        <div class="judge-desc">Led the Membership Workgroup at NBDPN — designing comprehensive surveys to understand member expectations, facilitating strategy discussions, and managing workgroup responsibilities. A reminder that leadership in data isn't always about code. Sometimes it's about asking the right questions and actually listening to the answers.</div>
+        <div class="judge-meta">
+          <span class="judge-tag">Workgroup Lead</span>
+          <span class="judge-tag">Survey Design</span>
+          <span class="judge-tag">Public Health</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
 
-<section id="testimonials" class="bg-alt">
+<!-- TESTIMONIALS -->
+<section id="testimonials">
   <div class="container">
-    <div class="sec-header"><div class="sec-tag">Testimonials</div><h2 class="sec-title">What people say<br>when I'm <em>not in the room</em></h2></div>
+    <div class="sec-tag">Testimonials</div>
+    <h2 class="sec-title">What people say<br>when I'm <em>not in the room</em></h2>
     <div class="testi-grid">
-      <div class="testi-card"><div class="tqmark">"</div><div class="ttext">Rohan has a rare ability to bridge the technical and human sides of data work. He doesn't just build pipelines — he makes sure the people who need the data can actually use it.</div><div class="tauthor"><div class="tname">Public Health Epidemiologist</div><div class="trole">Government Health Agency · Client</div></div></div>
-      <div class="testi-card"><div class="tqmark">"</div><div class="ttext">Rohan understood our compliance requirements faster than anyone we'd worked with. He built a data model that held up in an audit — then explained it to our CFO in plain English. Both things equally impressive.</div><div class="tauthor"><div class="tname">VP of Operations</div><div class="trole">Insurance Sector · Enterprise Client</div></div></div>
-      <div class="testi-card"><div class="tqmark">"</div><div class="ttext">We went from getting reports the next morning to live operational visibility. That shift changed how our entire ops team works. Rohan made it look easy — which I suspect means it wasn't.</div><div class="tauthor"><div class="tname">Director of Operations</div><div class="trole">Energy Markets · Client</div></div></div>
-      <div class="testi-card"><div class="tqmark">"</div><div class="ttext">His training sessions were the most effective I've attended. He has a gift for meeting people where they are — and somehow making data quality feel like something worth caring about.</div><div class="tauthor"><div class="tname">Program Coordinator</div><div class="trole">Public Health Program · Stakeholder</div></div></div>
+      <div class="testi-card">
+        <div class="tqm">/* quote */</div>
+        <div class="ttext">Rohan has an almost unsettling attention to detail — but the good kind. He catches things nobody else does, delivers ahead of schedule, and somehow still has time to explain what he built to the rest of the team. I've worked with a lot of engineers. He's different.</div>
+        <div class="tauthor"><div class="tname">Senior Epidemiologist</div><div class="trole">Indiana Dept. of Health · Colleague</div></div>
+      </div>
+      <div class="testi-card">
+        <div class="tqm">/* quote */</div>
+        <div class="ttext">What sets Rohan apart is that he understands the business problem before he touches the data. He doesn't just build what you asked for — he builds what you actually needed. And he always delivers before you expect it, which at this point I've learned to expect.</div>
+        <div class="tauthor"><div class="tname">VP of Operations</div><div class="trole">Insurance Sector · Enterprise Client</div></div>
+      </div>
+      <div class="testi-card">
+        <div class="tqm">/* quote */</div>
+        <div class="ttext">Rohan is that rare engineer who can sit in a room with non-technical stakeholders and actually bridge the gap — not just translate, but genuinely help both sides understand each other. He's punctual, precise, and cares about getting it right. That combination is hard to find.</div>
+        <div class="tauthor"><div class="tname">Program Director</div><div class="trole">Public Health Program · Stakeholder</div></div>
+      </div>
+      <div class="testi-card">
+        <div class="tqm">/* quote */</div>
+        <div class="ttext">Every deadline, met. Every deliverable, on point. I kept waiting for a miss and it never came. More than that — Rohan has a business acumen that most data engineers don't develop until much later in their careers. He sees the full picture, not just the pipeline.</div>
+        <div class="tauthor"><div class="tname">Director of Operations</div><div class="trole">Energy Markets · Client</div></div>
+      </div>
     </div>
-    <p style="margin-top:18px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--dim);">// placeholder quotes — replace with real LinkedIn recommendations</p>
+    <p style="margin-top:18px;text-align:center;font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--muted);">// Replace these with real quotes from your LinkedIn recommendations when you collect them</p>
   </div>
 </section>
 
-<section id="blog">
+<!-- WRITING (Coming Soon) -->
+<section id="writing">
   <div class="container">
-    <div class="sec-header"><div class="sec-tag">Writing</div><h2 class="sec-title">Thinking<br><em>out loud</em></h2></div>
-    <div class="blog-list">
-      <a href="#" class="blog-row reveal"><div class="bdate">Mar 2025</div><div class="btitle">Why Your ETL Pipeline Is Lying to You (And How to Find Out)</div><div class="bchip">Data Engineering</div></a>
-      <a href="#" class="blog-row reveal"><div class="bdate">Feb 2025</div><div class="btitle">Star Schema vs. Data Vault: A Practitioner's Honest Take</div><div class="bchip">Data Modeling</div></a>
-      <a href="#" class="blog-row reveal"><div class="bdate">Dec 2024</div><div class="btitle">The Dashboard Nobody Uses — and How to Prevent It</div><div class="bchip">BI & Analytics</div></a>
-      <a href="#" class="blog-row reveal"><div class="bdate">Oct 2024</div><div class="btitle">Getting to 95% Error Reduction: What Actually Worked</div><div class="bchip">Case Study</div></a>
-      <a href="#" class="blog-row reveal"><div class="bdate">Aug 2024</div><div class="btitle">Databricks vs. Snowflake: Stop Asking the Internet, Start Asking the Use Case</div><div class="bchip">Cloud Data</div></a>
+    <div class="sec-tag">Writing</div>
+    <h2 class="sec-title">Thinking<br><em>out loud</em></h2>
+    <div class="writing-soon">
+      <div class="ws-icon">✍️</div>
+      <div class="ws-title">Something's brewing.</div>
+      <div class="ws-body">
+        I've been building things for a while now. At some point the ideas start to pile up and you have to let them out somewhere.<br><br>
+        Writing is coming — starting on <strong style="color:var(--text);">LinkedIn</strong>, then wherever the ideas take me. Topics will include data engineering in the real world, working across industries, and the occasional honest take on what actually works and what's just hype.
+      </div>
+      <div class="ws-where">
+        <span class="ws-platform">LinkedIn — coming soon</span>
+        <span class="ws-platform">Medium — eventually</span>
+      </div>
+      <a href="https://www.linkedin.com/in/rohankmehtaa/" target="_blank" class="btn btn-g" style="margin-top:8px;cursor:none;">Follow on LinkedIn</a>
     </div>
-    <p style="margin-top:18px;font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--dim);">// placeholder titles — swap in your real articles or remove this section</p>
   </div>
 </section>
 
+<!-- CONTACT -->
 <section id="contact">
   <div class="container">
-    <div class="contact-headline">Got a data problem?<br>I've probably <em>already solved it.</em></div>
-    <div class="contact-sub">// Open to senior roles in data engineering, analytics, and architecture</div>
+    <div class="contact-headline">Data is how I<br>make sense of the <em>world.</em></div>
+    <div class="contact-sub">// Let's talk about what we can build together</div>
     <a href="mailto:rohanmehta.careers@gmail.com" class="cemail">rohanmehta.careers@gmail.com</a>
     <div class="socials">
-      <a href="https://www.linkedin.com/in/rohankmehtaa/" target="_blank" class="sbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>LinkedIn</a>
-      <a href="tel:9083402638" class="sbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.72a16 16 0 0 0 6.29 6.29l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>(908) 340-2638</a>
-      <a href="mailto:rohanmehta.careers@gmail.com" class="sbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email</a>
+      <a href="https://www.linkedin.com/in/rohankmehtaa/" target="_blank" class="sbtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="tel:9083402638" class="sbtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.72a16 16 0 0 0 6.29 6.29l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        (908) 340-2638
+      </a>
+      <a href="mailto:rohanmehta.careers@gmail.com" class="sbtn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Email
+      </a>
     </div>
     <div class="cform">
-      <div class="fg"><label class="flbl">Your Name</label><input class="finp" type="text" placeholder="Jane Smith"></div>
-      <div class="fg"><label class="flbl">Your Email</label><input class="finp" type="email" placeholder="jane@company.com"></div>
-      <div class="fg"><label class="flbl">Message</label><textarea class="ftxt" placeholder="Tell me about the role or the problem you're trying to solve..."></textarea></div>
-      <button class="fsub" onclick="handleSubmit(this)">Send Message</button>
+      <div class="fg"><label class="flbl">name</label><input class="finp" type="text" placeholder="Jane Smith"></div>
+      <div class="fg"><label class="flbl">email</label><input class="finp" type="email" placeholder="jane@company.com"></div>
+      <div class="fg"><label class="flbl">message</label><textarea class="ftxt" placeholder="What's on your mind?"></textarea></div>
+      <button class="fsub" onclick="handleSubmit(this)">Send Message →</button>
     </div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <div class="fl"><span class="fp">rohan@portfolio</span> ~ © 2025 Rohan Mehta · Indianapolis, IN</div>
-  <div class="fr">If you read this far, you should probably just hire me.</div>
+  <div class="fl"><span class="fp">~/rohan</span> $ echo "© 2025 Rohan Mehta · Indianapolis, IN"</div>
+  <div class="fr">// If you read this far, you should probably just reach out.</div>
 </footer>
 
 <script>
+// Cursor
 const dot=document.getElementById('cdot'),ring=document.getElementById('cring');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.transform=`translate(${mx-3.5}px,${my-3.5}px)`;});
-(function a(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.transform=`translate(${rx-15}px,${ry-15}px)`;requestAnimationFrame(a);})();
-const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.1});
-document.querySelectorAll('.reveal,.exp-entry,.proj-card,.cert-card,.judge-card,.blog-row').forEach((el,i)=>{el.style.transitionDelay=`${(i%4)*.08}s`;obs.observe(el);});
-function handleSubmit(btn){btn.textContent='Message Sent ✓';btn.style.background='transparent';btn.style.borderColor='#3fb950';btn.style.color='#3fb950';btn.disabled=true;}
+(function a(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.transform=`translate(${rx-15}px,${ry-15}px)`;requestAnimationFrame(a);})();
+
+// Scroll reveal
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});
+document.querySelectorAll('.reveal,.exp-entry,.proj-card,.cert-card,.judge-card').forEach((el,i)=>{el.style.transitionDelay=`${(i%3)*0.09}s`;obs.observe(el);});
+
+// Form
+function handleSubmit(btn){btn.textContent='Sent ✓';btn.style.background='rgba(107,203,119,0.12)';btn.style.border='1.5px solid var(--green)';btn.style.color='var(--green)';btn.disabled=true;}
 </script>
 </body>
 </html>
