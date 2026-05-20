@@ -188,7 +188,7 @@ section { padding:100px 0;position:relative;z-index:1; }
 .stats-inner { max-width:1100px;margin:0 auto;padding:0 56px;display:grid;grid-template-columns:repeat(5,1fr); }
 .stat-cell { padding:28px 18px;border-right:1px solid var(--border); }
 .stat-cell:last-child { border-right:none; }
-.stat-lbl { font-family:'JetBrains Mono',monospace;font-size:0.59rem;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:5px; }
+.stat-lbl { font-family:'JetBrains Mono',monospace;font-size:0.59rem;color: #e0e0e0;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:5px; }
 .stat-num { font-family:'Fraunces',serif;font-size:2.1rem;font-weight:700;color:var(--white);line-height:1; }
 .stat-num .u { font-size:1rem;color:var(--accent);font-weight:300; }
 .stat-sub { font-family:'JetBrains Mono',monospace;font-size:0.59rem;color:var(--green);margin-top:4px; }
@@ -397,12 +397,11 @@ footer { border-top:1px solid var(--border);padding:24px 56px;display:flex;justi
         <div><span class="tp">$</span> <span class="tk">role</span> = <span class="tv">"Data Engineer"</span></div>
         <div><span class="tp">$</span> <span class="tk">superpower</span> = <span class="tv">"I make data do things it didn't know it could"</span></div>
         <div><span class="tp">$</span> <span class="tk">based_in</span> = <span class="tv">"Indianapolis, IN"</span></div>
-        <div class="tc"># 750K+ records · $235K+ impact · 4+ industries · 0 boring dashboards</div>
       </div>
     </div>
     <div class="hero-cta">
       <a href="#experience" class="btn btn-p">View My Work</a>
-      <a href="#contact" class="btn btn-g">Say Hello</a>
+      <a href="#contact" class="btn btn-p">Say Hello</a>
     </div>
   </div>
 
@@ -434,6 +433,7 @@ footer { border-top:1px solid var(--border);padding:24px 56px;display:flex;justi
     <div class="stat-cell"><div class="stat-lbl">Funding Enabled</div><div class="stat-num">$235<span class="u">K+</span></div><div class="stat-sub">↑ via BI dashboards</div></div>
     <div class="stat-cell"><div class="stat-lbl">Latency Reduction</div><div class="stat-num">50<span class="u">%</span></div><div class="stat-sub">↓ reporting lag</div></div>
     <div class="stat-cell"><div class="stat-lbl">Industries</div><div class="stat-num">4<span class="u">+</span></div><div class="stat-sub">↑ domains impacted</div></div>
+    <div class="stat-cell"><div class="stat-lbl">Boring Dashboards</div><div class="stat-num">0<span class="u"></span></div><div class="stat-sub"> None </div></div>
   </div>
 </div>
 
@@ -453,8 +453,8 @@ footer { border-top:1px solid var(--border);padding:24px 56px;display:flex;justi
         <div class="card-bar"><span class="d r"></span><span class="d y"></span><span class="d g"></span><span style="margin-left:6px;">profile.json</span></div>
         <div class="card-body">
           <div class="crow"><div class="ckey">location</div><div class="cval"><span class="a">Indianapolis, IN</span></div></div>
-          <div class="crow"><div class="ckey">current_role</div><div class="cval">Data Engineer <span class="m">@ Bourntec Solutions</span></div></div>
-          <div class="crow"><div class="ckey">education</div><div class="cval">M.S. Data Science<br><span class="m">Indiana University, Bloomington</span><br>B.Tech. Computer Engineering<br><span class="m">Charotar University, India</span></div></div>
+          <div class="crow"><div class="ckey">current_role</div><div class="cval">Data Engineer <span class="a">@ Bourntec Solutions</span></div></div>
+          <div class="crow"><div class="ckey">education</div><div class="cval">M.S. Data Science<br><span class="a">Indiana University, Bloomington</span><br>B.Tech. Computer Engineering<br><span class="a">Charotar University, India</span></div></div>
           <div class="crow"><div class="ckey">certifications</div><div class="cval"><span class="g">✓</span> PBI Data Analyst Associate<br><span class="g">✓</span> Lean Six Sigma Green Belt<br><span class="m">⟳ Snowflake SnowPro Core</span></div></div>
           <div class="crow"><div class="ckey">also_known_for</div><div class="cval"><span class="a">Conference Reviewer · Hackathon Judge</span></div></div>
         </div>
@@ -537,7 +537,7 @@ footer { border-top:1px solid var(--border);padding:24px 56px;display:flex;justi
             <span class="domain">Enterprise Ops</span>
           </div>
 
-          <div class="exp-sub-label">&gt; Energy Markets Client (MISO)</div>
+          <div class="exp-sub-label">&gt; Energy Markets Client</div>
           <ul class="buls">
             <li>Designed a <strong>metadata-driven ELT framework</strong> using Azure Data Factory to ingest data from Network Attached Storage into ADLS Gen2 and Azure Synapse Analytics — reducing manual ingestion effort by ~40%.</li>
             <li>Architected a scalable <strong>Medallion Architecture (Bronze, Silver, Gold)</strong> using Delta Lake, improving data reliability and enabling structured downstream analytics consumption.</li>
@@ -549,7 +549,23 @@ footer { border-top:1px solid var(--border);padding:24px 56px;display:flex;justi
           </ul>
 
           <div class="exp-subsection">
-            <div class="exp-sub-label">&gt; Public Health, Insurance &amp; Enterprise Clients</div>
+            <div class="exp-sub-label">&gt; Public Health Client</div>
+            <ul class="buls">
+            <li>Built an <strong>end-to-end ETL pipeline</strong> (SQL, Python, SAS, Apache Spark) integrating 750K+ records for the CDC-funded ADDM Network, improving data readiness and reducing processing time by 30%.</li>
+            <li>Collected, cleaned, and analyzed statewide hospital data for the <strong>Neonatal Abstinence Syndrome (NAS)</strong> project — clinical records, discharge data, Medicaid and payer claims — to track substance use trends and support rural healthcare policy planning.</li>
+            <li>Led data collection and analysis for the <strong>Early Hearing Detection and Intervention (EHDI)</strong> program across all Indiana hospitals and clinics, influencing $235K+ in annual funding allocations for families needing financial assistance.</li>
+            <li>Prepared a <strong>750,000+ row dataset</strong> for the CDC Environmental Public Health Tracking program, merging multi-source birth defects prevalence data across counties, maternal demographics, and race/ethnicity categories.</li>
+            <li>Navigated entirely <strong>undocumented databases</strong> — no data dictionary, no map — to extract data across all programs, enabling the Public Health Genetics Division to fulfill national research requests for the first time.</li>
+            <li>Automated <strong>REDCap database ingestion</strong> for ASD diagnosis data using SAS, boosting data integrity and reducing manual effort across the team.</li>
+            <li>Led the <strong>NBDPN Membership Workgroup</strong> as workgroup lead — designed surveys, facilitated strategy, and managed responsibilities to improve responsiveness to member needs.</li>
+            <li>Partnered with the <strong>Sickle Cell Disease CASCADE program</strong> (IHI) to structure data enabling service delivery for underserved adult populations across Indiana.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+          <div class="exp-subsection">
+            <div class="exp-sub-label">&gt;Insurance &amp; Enterprise Clients</div>
             <ul class="buls">
               <li>Designed and delivered scalable ETL pipelines (SQL, Python, Spark, SAS) across multiple client engagements — cutting manual errors by 95% and dramatically accelerating data delivery.</li>
               <li>Built real-time monitoring systems ensuring <strong>750K+ records</strong> processed with audit-grade reliability — the kind of data quality people stake their reputations on.</li>
@@ -560,33 +576,6 @@ footer { border-top:1px solid var(--border);padding:24px 56px;display:flex;justi
               <li>Consistently bridged technical and non-technical teams, achieving 100% alignment of deliverables with business goals across every engagement.</li>
             </ul>
           </div>
-        </div>
-      </div>
-
-      <!-- IDOH -->
-      <div class="exp-entry reveal">
-        <div>
-          <div class="exp-co">Indiana Dept. of Health</div>
-          <div class="exp-per">Aug 2023 – Aug 2024</div>
-          <div class="exp-loc">Indianapolis, IN</div>
-        </div>
-        <div>
-          <div class="exp-role">Data Manager</div>
-          <div class="domains">
-            <span class="domain">Public Health</span>
-            <span class="domain">CDC-Funded Programs</span>
-            <span class="domain">Health Equity</span>
-          </div>
-          <ul class="buls">
-            <li>Built an <strong>end-to-end ETL pipeline</strong> (SQL, Python, SAS, Apache Spark) integrating 750K+ records for the CDC-funded ADDM Network, improving data readiness and reducing processing time by 30%.</li>
-            <li>Collected, cleaned, and analyzed statewide hospital data for the <strong>Neonatal Abstinence Syndrome (NAS)</strong> project — clinical records, discharge data, Medicaid and payer claims — to track substance use trends and support rural healthcare policy planning.</li>
-            <li>Led data collection and analysis for the <strong>Early Hearing Detection and Intervention (EHDI)</strong> program across all Indiana hospitals and clinics, influencing $235K+ in annual funding allocations for families needing financial assistance.</li>
-            <li>Prepared a <strong>750,000+ row dataset</strong> for the CDC Environmental Public Health Tracking program, merging multi-source birth defects prevalence data across counties, maternal demographics, and race/ethnicity categories.</li>
-            <li>Navigated entirely <strong>undocumented databases</strong> — no data dictionary, no map — to extract data across all programs, enabling the Public Health Genetics Division to fulfill national research requests for the first time.</li>
-            <li>Automated <strong>REDCap database ingestion</strong> for ASD diagnosis data using SAS, boosting data integrity and reducing manual effort across the team.</li>
-            <li>Led the <strong>NBDPN Membership Workgroup</strong> as workgroup lead — designed surveys, facilitated strategy, and managed responsibilities to improve responsiveness to member needs.</li>
-            <li>Partnered with the <strong>Sickle Cell Disease CASCADE program</strong> (IHI) to structure data enabling service delivery for underserved adult populations across Indiana.</li>
-          </ul>
         </div>
       </div>
 
